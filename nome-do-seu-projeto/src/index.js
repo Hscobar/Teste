@@ -3,16 +3,14 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Header from './components/header/header';
-import Form from './components/form/form';
+import SignUpPartnerPage from "./Pages/Parceiro/SignUpPartner.jsx"
+import SignUpUserPage from "./Pages/UsuarioComum/SignUpUser.jsx"
 import Featured from './components/featured/featured';
+import Login from './components/login/login';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Featured/>
-    <Form/>
-    <App />
-  
+    <App/>
   </React.StrictMode>
 );
 

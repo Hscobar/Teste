@@ -1,7 +1,9 @@
 import React from "react";
-import './form.css'
-import FacebookIcon from "../../icons/iconFacebook.svg";
-import InstagramIcon from "../../icons/iconInstagram.svg";
+import './form.css';
+
+import facebookRoxo from '../../assets/facebookRoxo.svg'
+import instagramRoxo from '../../assets/instagramRoxo.svg'
+
 function Form()
 {
     return(
@@ -19,7 +21,7 @@ function Form()
                             <span className="nameField">Nome Completo</span>
                             <input 
                                 type="text" 
-                                size={47} 
+                                size={43} 
                                 required/>
                         </div>
 
@@ -40,7 +42,7 @@ function Form()
                                 pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"  
                                 maxLength="14" 
                                 required
-                                size={24}/> 
+                                size={22}/> 
                         </div>
                    
                         {/*MEI*/}
@@ -51,7 +53,7 @@ function Form()
                                     type="text"  
                                     pattern="[0-9]{2}\.[0-9]{3}\.[0-9]{3}\/[0-9]{4}-[0-9]{2}" 
                                     maxLength="18"
-                                    size={25}/> 
+                                    size={23}/> 
                                     <span className="optional">Não é obrigatório</span>
                             </div>
                         </div>
@@ -77,7 +79,7 @@ function Form()
                         <input 
                         type="text"
                         required
-                        size={13.5}/>
+                        size={12}/>
                     </div>
 
                     {/*BAIRRO*/}
@@ -86,7 +88,7 @@ function Form()
                         <input 
                         type="text"
                         required
-                        size={13.5}/>
+                        size={12}/>
                     </div>
                     
                     {/*LOGADOURO*/}
@@ -95,7 +97,7 @@ function Form()
                         <input 
                         type="text"
                         required
-                        size={38}/>
+                        size={35}/>
                     </div>
 
                     {/*NÚMERO DA CASA OU APARTAMENTO*/}
@@ -121,7 +123,7 @@ function Form()
                         <input 
                         type="text"
                         required
-                        size={29}/>
+                        size={27}/>
                     </div>
 
                     {/*CONFIRMAR SENHA*/}
@@ -130,7 +132,7 @@ function Form()
                         <input 
                         type="text"
                         required
-                        size={30}
+                        size={27.5}
                         />
                     </div>
 
@@ -183,7 +185,7 @@ function Form()
                         <input 
                             type="text"
                             required
-                            size={32}/>
+                            size={30}/>
                     </div>
 
                     {/*SITE DO NEGÓCIO*/}
@@ -192,7 +194,7 @@ function Form()
                         <input 
                             type="text"
                             required
-                            size={27}/>
+                            size={24}/>
                     </div>
                 </fieldset>
 
@@ -234,7 +236,7 @@ function Form()
 
                 {/*INSTAGRAM*/}
                 <div className="iconField">
-                    <img src={InstagramIcon} alt="Icone do Instragram" />
+                    <img src={instagramRoxo} alt="Icone do Instragram" />
                     <input 
                         type="text"
                         required
@@ -243,7 +245,7 @@ function Form()
 
                 {/*FACEBOOK*/}
                 <div className="iconField">
-                    <img src={FacebookIcon} alt="Icone do facebook" />
+                    <img src={facebookRoxo} alt="Icone do facebook" />
                     <input 
                         type="text"
                         required
