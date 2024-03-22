@@ -1,13 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './header.css';
 import '../../index.css';
 import HandshakeIconSvg from '../../assets/handshakeIcon.svg';
 import SearchIconSvg from '../../assets/searchIcon.svg';
 import UserIconSvg from '../../assets/userIcon.svg';
 import LogoDescritivaIcon from '../../assets/logoDescritivaIcon.svg';
+import ComponenetLogin from "../../components/login/login";
 
 function Header()
 {
+    const [mostrarComponente, setMostrarComponente] = useState(false);
+
+    const handleComponentLogin = () => {
+        setMostrarComponente(true);
+    };
+
     return (
         <div>
 
@@ -42,11 +49,13 @@ function Header()
                     
                     <button 
                     id='headerLogin'
-                    className='centralizeItems, headerScreenButtons'>
+                    className='centralizeItems, headerScreenButtons'
+                    onClick={handleComponentLogin}>
                         <img src={UserIconSvg} alt="Icone, para informar login" className='headerIcon'/>
                         <span>Login</span>  
                     </button>
-
+                    {mostrarComponente && <ComponenetLogin />}
+                        
                     <button
                     id='headerParceiros'
                     className='centralizeItems, headerScreenButtons'> 

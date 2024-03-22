@@ -21,7 +21,7 @@
     border-radius: 53px;
     text-align: center;
     width: 38%;
-    z-index: 2;
+    z-index: -1;
     height: 12%;
 }
 
@@ -49,6 +49,7 @@
 {
     width: 50%;
 }
+
 
 
 /*Configuração dos campos*/
@@ -91,7 +92,36 @@
     color:  #919191;
 }
 
-/*Configuração do campo Opcional*/
+/*Configuração Texto de aviso de erro abaixo do campo*/
+
+.invalidInput, .validInput
+{
+    text-align: right;
+  
+}
+
+.invalidInput span
+{
+    font-size: 14px;
+    color: red;
+}
+
+.validInput
+{
+    font-size: 14px;
+    color: green;
+}
+
+/*Mudando o campo CPF para ficar parecido com a estilização do campo MEI*/
+
+#centralizeCpfField
+{
+    display: flex;
+    align-items:flex-start;
+    gap: 15px;
+}
+
+    /*Configuração do campo Opcional + atualização do campo cpf*/
 .optionalField
 {
     display: flex;
@@ -104,12 +134,12 @@
     color: #FF8D3B;
 }
 
-#inputOptional
+#inputOptional, .especialCase
 {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    text-align: right;
+   
     
 }
 /*Configuração do campo modalidade*/

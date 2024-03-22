@@ -21,7 +21,7 @@
     border-radius: 53px;
     text-align: center;
     width: 39%;
-    z-index: 2;
+    z-index: 1;
     height: 12%;
 }
 
@@ -251,4 +251,46 @@
     background-color: #f6e8ff;
     height: 70px;
 
+}
+
+.especialCase
+{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;   
+}
+
+/*Configuração Texto de aviso de erro abaixo do campo*/
+
+.invalidInput, .validInput
+{
+    text-align: right;
+  
+}
+
+.invalidInput span
+{
+    font-size: 14px;
+    color: red;
+}
+
+.validInput
+{
+    font-size: 14px;
+    color: green;
+}
+
+/*Mudando o campo CPF para ficar parecido com a estilização do campo MEI*/
+
+#centralizeCpfField
+{
+    display: flex;
+    align-items:flex-start;
+    gap: 15px;
+}
+
+.textCentralize
+{
+   text-align: start;
+   margin-top: 5px;
 }

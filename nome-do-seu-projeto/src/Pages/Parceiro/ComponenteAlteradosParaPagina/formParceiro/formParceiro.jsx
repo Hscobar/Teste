@@ -1,11 +1,86 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import './formParceiro.css';
 
 import facebookRoxo from '../../../../assets/facebookRoxo.svg'
 import instagramRoxo from '../../../../assets/instagramRoxo.svg'
 
-function Form()
+function isValidCNPJ (cnpj){
+    // formato - XX.XXX.XXX/XXXX-XX ou apenas numeros
+    // Expressão regular para validar CNPJ
+    const cnpjRegex = /^(\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}|\d{14})$/;
+    return cnpjRegex.test(cnpj);
+}
+
+function isValidCPF(cpf) {
+    // Remover caracteres não numéricos
+    const cpfRegex = /^(\d{3}\.\d{3}\.\d{3}-\d{2}|\d{11})$/;
+    return cpfRegex.test(cpf);
+}
+
+function isValidEmail(email){
+    // Expressão regular para validar e-mail simples
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+function isValidTelefone (telefone){
+    // Expressão regular para validar telefone brasileiro
+    // Aceita números no formato (XX) XXXXX-XXXX ou XXXXXXXXXX
+    const telefoneRegex = /^(?:\(\d{2}\) \d{5}-\d{4}|\d{11})$/;
+    return telefoneRegex.test(telefone);
+}
+
+function CadastroRealizado()
 {
+    return alert("Seu cadastro foi enviado com sucesso. Por favor aguarde a validação da conta via o e-mail cadastrado!");
+}
+
+function FormPartner()
+{
+    const [cpf, setCpf] = useState('');
+    const [mei, setMei] = useState('');
+    const [email, setEmail] = useState('');
+    const [telefone, setTelefone] = useState('');
+    const [cpfValido, setCpfValido] = useState(true);
+    const [meiValido, setMeiValido] = useState(true);
+    const [emailValido, setEmailValido] = useState(true);
+    const [telefoneValido, setTelefoneValido] = useState(true);
+    const [senha, setSenha] = useState('');
+    const [confirmarSenha, setConfirmarSenha] = useState('');
+
+    
+    useEffect(() => {
+        setCpfValido(isValidCPF(cpf));
+    }, [cpf]);
+
+    useEffect(() => {
+        setMeiValido(isValidCNPJ(mei));
+    }, [mei]);
+
+    useEffect(() => {
+        setEmailValido(isValidEmail(email));
+    }, [email]);
+
+    useEffect(() => {
+        setTelefoneValido(isValidTelefone(telefone));
+    }, [telefone]);
+
+    const handleCpfChange = (event) => {
+        setCpf(event.target.value);
+    };
+
+    const handleMeiChange = (event) => {
+        setMei(event.target.value);
+    };
+
+    const handleEmailChange = (event) => {
+        setEmail(event.target.value);
+    };
+
+    const handleTelefoneChange = (event) => {
+        setTelefone(event.target.value);
+    };
+
     return(
         
        <div>
@@ -41,14 +116,24 @@ function Form()
                             </div> 
 
                             {/*CPF*/}
-                            <div className="fieldType2">
-                                <span className="nameField">CPF</span>
-                                <input 
-                                    type="text"
-                                    pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"  
-                                    maxLength="14" 
-                                    required
-                                    size={22}/> 
+                            <div className="fieldTypeEspecial, textCentralize">
+                                <div id="centralizeCpfField">
+                                    <span className="nameField">CPF</span>
+                                    <div className="especialCase">
+                                        <input 
+                                            type="text"
+                                            pattern="^(\d{3}\.\d{3}\.\d{3}-\d{2}|\d{11})$" 
+                                            maxLength="14" 
+                                            required
+                                            value={cpf}
+                                            onChange={handleCpfChange}
+                                            size={22}
+                                            placeholder="123.123.123-12"/> 
+                                        <span className="invalidInput">
+                                            {cpf !== '' && !cpfValido && <span className="error">CPF inválido</span>}
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                     
                             {/*MEI*/}
@@ -57,10 +142,16 @@ function Form()
                                 <div id="inputOptional">
                                     <input 
                                         type="text"  
-                                        pattern="[0-9]{2}\.[0-9]{3}\.[0-9]{3}\/[0-9]{4}-[0-9]{2}" 
+                                        pattern="^(\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}|\d{14})$" 
                                         maxLength="18"
-                                        size={23}/> 
-                                        <span className="optional">Não é obrigatório</span>
+                                        value={mei}
+                                        onChange={handleMeiChange}
+                                        placeholder="12.345.678/0001-90"
+                                        size={23}/>
+                                    <span className="optional">Não é obrigatório</span>
+                                    <span className="invalidInput">
+                                        {mei !== '' && !meiValido && <span className="error">MEI inválido</span>}
+                                    </span>
                                 </div>
                             </div>
                         
@@ -103,16 +194,18 @@ function Form()
                             <input 
                             type="text"
                             required
-                            size={35}/>
+                            size={34}/>
                         </div>
 
                         {/*NÚMERO DA CASA OU APARTAMENTO*/}
                         <div className="fieldType2">
                             <span className="nameField">N°</span>
                             <input 
-                            type="text"
+                            type="number"
                             required
-                            size={6}/>
+                            size={6}
+                            max={99999}
+                            min={0}/>
                         </div>
                     
                         
@@ -129,6 +222,9 @@ function Form()
                             <input 
                             type="password"
                             required
+                            value={confirmarSenha} 
+                            onChange={(e) => setConfirmarSenha(e.target.value)} 
+                            minLength={8}
                             size={27}/>
                         </div>
 
@@ -136,10 +232,20 @@ function Form()
                         <div className="fieldType1">
                             <span className="nameField">Reescreva a Senha</span>
                             <input 
-                            type="password"
-                            required
-                            size={27.5}
-                            />
+                                type="password"
+                                required
+                                value={senha} 
+                                onChange={(e) =>{ setSenha(e.target.value);}}
+                                minLength={8}
+                                size={27.5}/>
+                            <span>
+                                {/* Exibir mensagem de sucesso se as senhas forem compatíveis */}
+                                {(senha !== '' && confirmarSenha !== '') && senha === confirmarSenha && (
+                                    <span className="validInput">As senhas são compatíveis!</span>
+                                )}
+                            </span>
+                            
+                       
                         </div>
 
                         {/*Orientação de preenchimento de senha*/}
@@ -209,10 +315,9 @@ function Form()
                         <label htmlFor="membership">Plano Escolhido</label>
                         <select id="membership" required>
                             <option value="">Selecione</option>
+                            <option value="free">Gratuito</option>
                             <option value="bronze">Bronze</option>
-                            <option value="silver">Silver</option>
-                            <option value="gold">Gold</option>
-                            <option value="platinum">Platinum</option>
+                            <option value="diamond">Diamante</option>
                         </select>
                     </div>
 
@@ -227,17 +332,31 @@ function Form()
                         <span className="nameField">Número de Telefone</span>
                         <input 
                             type="tel"
+                            value={telefone}
+                            onChange={handleTelefoneChange}
                             required
+                            pattern="(?:\(\d{2}\) \d{5}-\d{4}|\d{11})"
+                            placeholder="(11) 92222-3333 ou só números"
+                            title="(11) 92222-3333 ou apenas números"
                             size={17}/>
+                            <span className="invalidInput">
+                                {telefone !== '' && !telefoneValido && <span className="error">Telefone inválido</span>}
+                            </span>
+                            
                     </div>
-
+                    
                     {/*EMAIL*/}
                     <div className="fieldType1">
                         <span className="nameField">Email</span>
                         <input 
                             type="email"
                             required
+                            value={email}
+                            onChange={handleEmailChange}
                             size={42.5}/>
+                            <span className="invalidInput">
+                                {email !== '' && !emailValido && <span className="error">Email inválido</span>}
+                            </span>
                     </div>
 
                     {/*INSTAGRAM*/}
@@ -260,13 +379,12 @@ function Form()
 
                     <div id="buttonsForm">
                         <button id="cadastradoButton">JÁ POSSUO CADASTRO</button>
-                        <button id="cadastrarButton">CADASTRAR</button>
+                        <button id="cadastrarButton" type="submit" onSubmit={CadastroRealizado}>CADASTRAR</button>
                     </div>
                 </fieldset>
 
-               
-            
             </form>
+            
 
         </div>
 
@@ -280,4 +398,4 @@ function Form()
     );
 }
 
-export default Form;
+export default FormPartner;

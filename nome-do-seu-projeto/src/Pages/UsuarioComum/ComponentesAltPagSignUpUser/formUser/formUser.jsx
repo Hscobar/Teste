@@ -1,10 +1,51 @@
 
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import './formUser.css';
 
-function Form()
+function isValidCPF(cpf) {
+    // Remover caracteres não numéricos
+    const cpfRegex = /^(\d{3}\.\d{3}\.\d{3}-\d{2}|\d{11})$/;
+    return cpfRegex.test(cpf);
+}
+
+function isValidEmail(email){
+    // Expressão regular para validar e-mail simples
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+function CadastroRealizado()
 {
+    return alert("Seu cadastro foi enviado com sucesso. Por favor aguarde a validação da conta via o e-mail cadastrado!");
+}
+
+function FormUser()
+{
+    const [cpf, setCpf] = useState('');
+    const [email, setEmail] = useState('');
+    const [cpfValido, setCpfValido] = useState(true);
+    const [emailValido, setEmailValido] = useState(true);
+    const [senha, setSenha] = useState('');
+    const [confirmarSenha, setConfirmarSenha] = useState('');
+
+    useEffect(() => {
+        setCpfValido(isValidCPF(cpf));
+    }, [cpf]);
+
+    useEffect(() => {
+        setEmailValido(isValidEmail(email));
+    }, [email]);
+
+
+    const handleCpfChange = (event) => {
+        setCpf(event.target.value);
+    };
+
+    const handleEmailChange = (event) => {
+        setEmail(event.target.value);
+    };
+
     return(
         
        <div>
@@ -17,7 +58,7 @@ function Form()
                     <span>Cadastro</span>
                 </div>
                 {/*Contém todo o formulário e seus campos*/}
-                <form id="formContainer">
+                <form id="formContainer" onSubmit={CadastroRealizado}>
 
                 {/*Campo das informações pessoais*/}
                 <fieldset className = "fieldSetConfig">
@@ -40,14 +81,24 @@ function Form()
                             </div> 
 
                             {/*CPF*/}
-                            <div className="fieldType2">
-                                <span className="nameField">CPF</span>
-                                <input 
-                                    type="text"
-                                    pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"  
-                                    maxLength="14" 
-                                    required
-                                    size={15}/> 
+                            <div className="fieldTypeEspecial, textCentralize">
+                                <div id="centralizeCpfField">
+                                    <span className="nameField">CPF</span>
+                                    <div className="especialCase">
+                                        <input 
+                                            type="text"
+                                            pattern="^(\d{3}\.\d{3}\.\d{3}-\d{2}|\d{11})$"   
+                                            maxLength="14" 
+                                            required
+                                            value={cpf}
+                                            onChange={handleCpfChange}
+                                            size={15}
+                                            placeholder="123.123.123-12"/> 
+                                        <span className="invalidInput">
+                                            {cpf !== '' && !cpfValido && <span className="error">CPF inválido</span>}
+                                        </span>  
+                                    </div>
+                                </div>  
                             </div>
                             
                             {/*EMAIL*/}
@@ -56,7 +107,12 @@ function Form()
                                 <input 
                                     type="email"
                                     required
-                                    size={29}/>
+                                    size={29}
+                                    value={email}
+                                    onChange={handleEmailChange}/>
+                                 <span className="invalidInput">
+                                    {email !== '' && !emailValido && <span className="error">Email inválido</span>}
+                                 </span>
                             </div>
                         
                     </fieldset>
@@ -70,7 +126,10 @@ function Form()
                             <input 
                             type="password"
                             required
-                            size={27}/>
+                            size={27}
+                            value={confirmarSenha} 
+                            onChange={(e) => setConfirmarSenha(e.target.value)} 
+                            minLength={8}/>
                         </div>
 
                         {/*CONFIRMAR SENHA*/}
@@ -80,7 +139,16 @@ function Form()
                             type="password"
                             required
                             size={28}
-                            />
+                            value={senha} 
+                            onChange={(e) =>{ setSenha(e.target.value);}}
+                            minLength={8}/>
+                            <span>
+                                {/* Exibir mensagem de sucesso se as senhas forem compatíveis */}
+                                {(senha !== '' && confirmarSenha !== '') && senha === confirmarSenha && (
+                                <span className="validInput">As senhas são compatíveis!</span>
+                                )}
+                            </span>
+                            
                         </div>
 
                         {/*Orientação de preenchimento de senha*/}
@@ -94,7 +162,7 @@ function Form()
 
                         <div id="buttonsForm">
                             <button id="cadastradoButton">JÁ POSSUO CADASTRO</button>
-                            <button id="cadastrarButton">CADASTRAR</button>
+                            <button id="cadastrarButton" type="submit" >CADASTRAR</button>
                         </div>
 
                     </fieldset>
@@ -114,4 +182,4 @@ function Form()
 }
 
 
-export default Form;
+export default FormUser;

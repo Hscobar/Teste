@@ -20,10 +20,9 @@ function Login()
         // Fundo do componente, que será responsável por fixar o componente na tela.
         <div id="back">
              {/*Botão responsável por abrir o modal, Por a função ToggleModal no botão que for desajável mais tarde.*/}
-            <button id="openModal" onClick={ToggleModal}>Abrir Modal</button>
-
+           {/*  <button id="openModal" onClick={ToggleModal}>Abrir Modal</button>.*/}
              {/*Div responsável pela centralização do container do login e adição da cor do fundo*/}
-            <div id="loginCentralize" className="hide">
+            <div id="loginCentralize">
 
                  {/*Div que vai conter todos os elementos principais do login. Ex: inputs de email e senha*/}
                 <div id="loginContainer">
